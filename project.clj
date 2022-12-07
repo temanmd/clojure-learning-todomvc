@@ -6,5 +6,6 @@
   :dependencies [[org.clojure/clojure "1.11.1"]]
   :main ^:skip-aot todomvc.core
   :target-path "target/%s"
+  :plugins [[lein-cljfmt "0.9.0"]]
   :profiles {:uberjar {:aot :all
                        :jvm-opts ["-Dclojure.compiler.direct-linking=true"]}})
