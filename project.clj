@@ -9,7 +9,7 @@
                  [metosin/reitit-core "0.5.18"]
                  [metosin/reitit-ring "0.5.18"]
                  [hiccup "1.0.5"]]
-  :main ^:skip-aot todomvc.core
+  :main ^:skip-aot todomvc.backend.core
   :target-path "target/%s"
   :plugins [[lein-cljfmt "0.9.0"]]
   :profiles {:uberjar {:aot :all
