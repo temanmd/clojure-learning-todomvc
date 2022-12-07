@@ -6,9 +6,9 @@
             [reitit.coercion.spec :as rcs]
             [reitit.core :as ring-core]
             [todomvc.shared.routes :as routes]
-            ; [foobar.frontend.events]
-            ; [foobar.frontend.subs]
-            ; [foobar.frontend.effects]
+            [todomvc.frontend.events]
+            [todomvc.frontend.subs]
+            [todomvc.frontend.effects]
             [todomvc.frontend.views :as views]))
 
 (defn my-expand [registry]

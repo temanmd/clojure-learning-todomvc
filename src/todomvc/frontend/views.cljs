@@ -1,15 +1,14 @@
 (ns todomvc.frontend.views
   (:require
+   [re-frame.core :as re-frame]
    ["react-dom/client" :refer [createRoot]]))
 
 (defn component []
-  [:div
-   [:h1 "Hello, World and Clojurians!"]
-   [:h3 "I am a component!"]
-   [:p.someclass
-    "I have " [:strong "bold"]
-    [:span {:style {:color "red"}} " and red"]
-    " text."]])
+  (let [match @(re-frame/subscribe [:current-route])]
+    [:div
+     (if match
+       (let [view (:view (:data match))]
+         [view match]))]))
 
 (defn home-page []
   [:div
