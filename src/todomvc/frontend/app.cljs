@@ -27,7 +27,7 @@
                                       {:index {:view views/home-page}})})
 
    (fn [new-match] (re-frame/dispatch [:navigated new-match]))
-    ;; set to false to enable HistoryAPI
+
    {:use-fragment false}))
 
 (defn mount-root []
