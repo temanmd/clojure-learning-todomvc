@@ -22,15 +22,15 @@
                 (stop))]
     (fn [props]
       [:input.form-control (merge (dissoc props :on-save :on-stop :title)
-                     {:type "text"
-                      :value @val
-                      :auto-focus true
-                      :on-blur save
-                      :on-change #(reset! val (-> % .-target .-value))
-                      :on-key-down #(case (.-which %)
-                                      13 (save)
-                                      27 (stop)
-                                      nil)})])))
+                                  {:type "text"
+                                   :value @val
+                                   :auto-focus true
+                                   :on-blur save
+                                   :on-change #(reset! val (-> % .-target .-value))
+                                   :on-key-down #(case (.-which %)
+                                                   13 (save)
+                                                   27 (stop)
+                                                   nil)})])))
 
 (defn task-entry
   []
@@ -51,7 +51,7 @@
                            [:button.badge.text-bg-danger.ms-2
                             {:on-click #(dispatch [:delete-todo (:id todo)])
                              :type "button"}
-                            "x"]])]))
+                            "Delete"]])]))
 
 (defn home-page []
   [:div

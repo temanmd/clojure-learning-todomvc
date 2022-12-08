@@ -12,13 +12,13 @@
 ;; Todos
 
 (reg-sub
-  :sorted-todos
-  (fn [db _]
-    (:todos db)))
+ :sorted-todos
+ (fn [db _]
+   (:todos db)))
 
 (reg-sub
-  :todos
-  (fn [query-v _]
-    (subscribe [:sorted-todos]))
-  (fn [sorted-todos query-v _]
-    (vals sorted-todos)))
+ :todos
+ (fn [query-v _]
+   (subscribe [:sorted-todos]))
+ (fn [sorted-todos query-v _]
+   (vals sorted-todos)))

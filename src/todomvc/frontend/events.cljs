@@ -13,7 +13,8 @@
   (when-not (s/valid? a-spec db)
     (throw (ex-info (str "Spec check failed: " (s/explain-str a-spec db)) {}))))
 
-(def check-spec-interceptor (after (partial check-and-throw :todomvc.frontend.db/db)))
+(def check-spec-interceptor
+  (after (partial check-and-throw :todomvc.frontend.db/db)))
 
 (def ->local-store (after todos->local-store))
 
@@ -51,10 +52,10 @@
      (assoc todos id {:id id :title text :done false}))))
 
 (reg-event-db
-  :delete-todo
-  todo-interceptors
-  (fn [todos [_ id]]
-    (dissoc todos id)))
+ :delete-todo
+ todo-interceptors
+ (fn [todos [_ id]]
+   (dissoc todos id)))
 ;; Routes
 
 (reg-event-fx
