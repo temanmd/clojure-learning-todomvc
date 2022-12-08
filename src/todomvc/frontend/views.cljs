@@ -21,7 +21,7 @@
                 (on-save v)
                 (stop))]
     (fn [props]
-      [:input (merge (dissoc props :on-save :on-stop :title)
+      [:input.form-control (merge (dissoc props :on-save :on-stop :title)
                      {:type "text"
                       :value @val
                       :auto-focus true
@@ -45,7 +45,7 @@
 (defn task-list
   []
   (let [visible-todos @(subscribe [:todos])]
-    [:ul#todo-list
+    [:ul#todo-list.mt-3
      (for [todo visible-todos]
        ^{:key (:id todo)} [:li (:title todo)])]))
 

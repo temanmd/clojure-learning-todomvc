@@ -9,5 +9,5 @@
             :content "width=device-width, initial-scale=1"}]
     (include-css "https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css")]
    [:body
-    [:div#app.container]
+    [:div#app.container.border]
     (include-js "/js/app.js")]))
