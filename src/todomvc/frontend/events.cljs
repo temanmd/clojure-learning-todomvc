@@ -36,10 +36,8 @@
 
 (reg-event-fx
  :initialize
-
  [(inject-cofx :local-store-todos)
   check-spec-interceptor]
-
  (fn [{:keys [db local-store-todos]} _]
    {:db (assoc default-db :todos local-store-todos)}))
 
@@ -47,13 +45,16 @@
 
 (reg-event-db
  :add-todo
-
  todo-interceptors
-
  (fn [todos [_ text]]
    (let [id (allocate-next-id todos)]
      (assoc todos id {:id id :title text :done false}))))
 
+(reg-event-db
+  :delete-todo
+  todo-interceptors
+  (fn [todos [_ id]]
+    (dissoc todos id)))
 ;; Routes
 
 (reg-event-fx

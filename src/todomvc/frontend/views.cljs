@@ -47,7 +47,11 @@
   (let [visible-todos @(subscribe [:todos])]
     [:ul#todo-list.mt-3
      (for [todo visible-todos]
-       ^{:key (:id todo)} [:li (:title todo)])]))
+       ^{:key (:id todo)} [:li (:title todo)
+                           [:button.badge.text-bg-danger.ms-2
+                            {:on-click #(dispatch [:delete-todo (:id todo)])
+                             :type "button"}
+                            "x"]])]))
 
 (defn home-page []
   [:div
