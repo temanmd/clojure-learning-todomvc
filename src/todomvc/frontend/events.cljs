@@ -52,10 +52,10 @@
      (assoc todos id {:id id :title text :done false}))))
 
 (reg-event-db
-  :save
-  todo-interceptors
-  (fn [todos [_ id title]]
-    (assoc-in todos [id :title] title)))
+ :save
+ todo-interceptors
+ (fn [todos [_ id title]]
+   (assoc-in todos [id :title] title)))
 
 (reg-event-db
  :delete-todo
@@ -64,30 +64,30 @@
    (dissoc todos id)))
 
 (reg-event-db
-  :toggle-done
-  todo-interceptors
-  (fn [todos [_ id]]
-    (update-in todos [id :done] not)))
+ :toggle-done
+ todo-interceptors
+ (fn [todos [_ id]]
+   (update-in todos [id :done] not)))
 
 (reg-event-db
-  :complete-all-toggle
-  todo-interceptors
-  (fn [todos _]
-    (let [todos-vals (vals todos)
-          todos-keys (keys todos)
-          new-done (not-every? :done todos-vals)]
-      (reduce #(assoc-in %1 [%2 :done] new-done)
-              todos
-              todos-keys))))
+ :complete-all-toggle
+ todo-interceptors
+ (fn [todos _]
+   (let [todos-vals (vals todos)
+         todos-keys (keys todos)
+         new-done (not-every? :done todos-vals)]
+     (reduce #(assoc-in %1 [%2 :done] new-done)
+             todos
+             todos-keys))))
 
 (reg-event-db
-  :clear-completed
-  todo-interceptors
-  (fn [todos _]
-    (let [done-ids (->> (vals todos)
-                        (filter :done)
-                        (map :id))]
-      (reduce dissoc todos done-ids))))
+ :clear-completed
+ todo-interceptors
+ (fn [todos _]
+   (let [done-ids (->> (vals todos)
+                       (filter :done)
+                       (map :id))]
+     (reduce dissoc todos done-ids))))
 
 ;; Routes
 
