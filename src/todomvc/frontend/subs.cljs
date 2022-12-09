@@ -47,3 +47,18 @@
   (fn [todos _]
     (every? :done todos)))
 
+(reg-sub
+  :completed-count
+  (fn [_ _]
+    (subscribe [:todos]))
+  (fn [todos _]
+    (count (filter :done todos))))
+
+(reg-sub
+  :footer-counts
+  (fn [_ _]
+    [(subscribe [:todos])
+     (subscribe [:completed-count])])
+  (fn [[todos completed-count] _]
+    [(- (count todos) completed-count) completed-count]))
+

@@ -74,6 +74,15 @@
               todos
               todos-keys))))
 
+(reg-event-db
+  :clear-completed
+  todo-interceptors
+  (fn [todos _]
+    (let [done-ids (->> (vals todos)
+                        (filter :done)
+                        (map :id))]
+      (reduce dissoc todos done-ids))))
+
 ;; Routes
 
 (reg-event-fx

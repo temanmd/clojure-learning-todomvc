@@ -86,12 +86,31 @@
       (for [todo visible-todos]
         ^{:key (:id todo)} [todo-item todo])]]))
 
+(defn footer-controls
+  []
+  (let [[active-count done-count] @(subscribe [:footer-counts])
+        showing @(subscribe [:showing])]
+    [:footer#footer
+     [:span#todo-count
+      [:strong active-count]
+      " "
+      (case active-count 1 "item" "items") " left"]
+     [:ul#filters
+      [:li "All"]
+      [:li "Active"]
+      [:li "Completed"]]
+     (when (pos? done-count)
+       [:button#clear-completed.btn.btn-primary
+        {:on-click #(dispatch [:clear-completed])}
+        "Clear completed"])]))
+
 (defn home-page
   []
-  [:div
+  [:div.pb-3
    [:h1 "Home page"]
    [task-entry]
    (when (seq @(subscribe [:todos]))
-     [task-list])])
+     [task-list])
+   [footer-controls]])
 
 (defonce root (createRoot (.getElementById js/document "app")))
