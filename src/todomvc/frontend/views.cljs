@@ -5,7 +5,8 @@
    [clojure.string :as str]
    ["react-dom/client" :refer [createRoot]]))
 
-(defn component []
+(defn component
+  []
   (let [match @(subscribe [:current-route])]
     [:div
      (if match
@@ -42,22 +43,55 @@
      :on-save #(when (seq %)
                  (dispatch [:add-todo %]))}]])
 
+(defn todo-item
+  []
+  (let [editing (reagent/atom false)]
+    (fn [{:keys [id done title]}]
+      [:li {:class (str (when done "completed")
+                        (when @editing "editing"))}
+       [:div.view
+        [:input.toggle
+         {:type "checkbox"
+          :checked done
+          :on-change #(dispatch [:toggle-done id])}]
+        [:label
+         {:on-double-click #(reset! editing true)}
+         title]
+        [:button.badge.text-bg-danger.ms-2
+         {:on-click #(dispatch [:delete-todo id])
+          :type "button"}
+         "Delete"]]
+       (when @editing
+         [todo-input
+          {:class "edit"
+           :title title
+           :on-save #(if (seq %)
+                       (dispatch [:save id %])
+                       (dispatch [:delete-todo id]))
+           :on-stop #(reset! editing false)}])])))
+
 (defn task-list
   []
-  (let [visible-todos @(subscribe [:todos])]
-    [:ul#todo-list.mt-3
-     (for [todo visible-todos]
-       ^{:key (:id todo)} [:li (:title todo)
-                           [:button.badge.text-bg-danger.ms-2
-                            {:on-click #(dispatch [:delete-todo (:id todo)])
-                             :type "button"}
-                            "Delete"]])]))
+  (let [visible-todos @(subscribe [:visible-todos])
+        all-complete? @(subscribe [:all-complete?])]
+    [:section#main
+     [:input#toggle-all
+      {:type "checkbox"
+       :checked all-complete?
+       :on-change #(dispatch [:complete-all-toggle])}]
+     [:label
+      {:for "toggle-all"}
+      "Mark all as complete"]
+     [:ul#todo-list.mt-3
+      (for [todo visible-todos]
+        ^{:key (:id todo)} [todo-item todo])]]))
 
-(defn home-page []
+(defn home-page
+  []
   [:div
    [:h1 "Home page"]
    [task-entry]
    (when (seq @(subscribe [:todos]))
-    [task-list])])
+     [task-list])])
 
 (defonce root (createRoot (.getElementById js/document "app")))

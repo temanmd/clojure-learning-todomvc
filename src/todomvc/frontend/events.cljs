@@ -56,6 +56,24 @@
  todo-interceptors
  (fn [todos [_ id]]
    (dissoc todos id)))
+
+(reg-event-db
+  :toggle-done
+  todo-interceptors
+  (fn [todos [_ id]]
+    (update-in todos [id :done] not)))
+
+(reg-event-db
+  :complete-all-toggle
+  todo-interceptors
+  (fn [todos _]
+    (let [todos-vals (vals todos)
+          todos-keys (keys todos)
+          new-done (not-every? :done todos-vals)]
+      (reduce #(assoc-in %1 [%2 :done] new-done)
+              todos
+              todos-keys))))
+
 ;; Routes
 
 (reg-event-fx
