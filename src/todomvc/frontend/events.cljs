@@ -45,6 +45,12 @@
 ;; Todos
 
 (reg-event-db
+  :set-showing
+  [check-spec-interceptor (path :showing)]
+  (fn [old-showing-value [_ new-showing-value]]
+    new-showing-value))
+
+(reg-event-db
  :add-todo
  todo-interceptors
  (fn [todos [_ text]]
