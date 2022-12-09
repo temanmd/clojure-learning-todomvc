@@ -52,6 +52,12 @@
      (assoc todos id {:id id :title text :done false}))))
 
 (reg-event-db
+  :save
+  todo-interceptors
+  (fn [todos [_ id title]]
+    (assoc-in todos [id :title] title)))
+
+(reg-event-db
  :delete-todo
  todo-interceptors
  (fn [todos [_ id]]
