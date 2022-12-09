@@ -57,6 +57,7 @@
   [:div
    [:h1 "Home page"]
    [task-entry]
-   [task-list]])
+   (when (seq @(subscribe [:todos]))
+    [task-list])])
 
 (defonce root (createRoot (.getElementById js/document "app")))
