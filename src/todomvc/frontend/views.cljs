@@ -54,7 +54,7 @@
          {:type "checkbox"
           :checked done
           :on-change #(dispatch [:toggle-done id])}]
-        [:label
+        [:label.ms-2
          {:on-double-click #(reset! editing true)}
          title]
         [:button.badge.text-bg-danger.ms-2
@@ -74,15 +74,15 @@
   []
   (let [visible-todos @(subscribe [:visible-todos])
         all-complete? @(subscribe [:all-complete?])]
-    [:section#main
+    [:section#main.mt-2
      [:input#toggle-all
       {:type "checkbox"
        :checked all-complete?
        :on-change #(dispatch [:complete-all-toggle])}]
-     [:label
+     [:label.ms-2
       {:for "toggle-all"}
       "Mark all as complete"]
-     [:ul#todo-list.mt-3
+     [:ul#todo-list.mt-2
       (for [todo visible-todos]
         ^{:key (:id todo)} [todo-item todo])]]))
 
