@@ -102,12 +102,12 @@
       [:strong active-count]
       " "
       (case active-count 1 "item" "items") " left"]
-      [:div.mt-2
-       [:div.btn-group
-        [filter-button :all "All" showing]
-        [filter-button :active "Active" showing]
-        [filter-button :done "Done" showing]]]
-      (when (pos? done-count)
+     [:div.mt-2
+      [:div.btn-group
+       [filter-button :all "All" showing]
+       [filter-button :active "Active" showing]
+       [filter-button :done "Done" showing]]]
+     (when (pos? done-count)
        [:button#clear-completed.btn.btn-primary.mt-2
         {:on-click #(dispatch [:clear-completed])}
         "Clear completed"])]))
