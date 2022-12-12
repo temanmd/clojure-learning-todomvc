@@ -17,6 +17,9 @@
         :output-dir "resources/public/js"
         :asset-path "/js"
         :modules {:app {:init-fn todomvc.frontend.app/init}}
+        :js-options {:resolve
+                     {"highlight.js"
+                      {:target :npm :require "highlight.js/lib/core"}}}
         :devtools {:repl-init-ns todomvc.frontend.app
                    :repl-pprint true
                    :preloads [day8.re-frame-10x.preload]}
