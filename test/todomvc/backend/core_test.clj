@@ -1,6 +1,6 @@
-(ns todomvc.core-test
+(ns todomvc.backend.core-test
   (:require [clojure.test :refer :all]
-            [todomvc.core :refer :all]))
+            [todomvc.backend.core :refer :all]))
 
 (deftest a-test
   (testing "FIXME, I fail."
