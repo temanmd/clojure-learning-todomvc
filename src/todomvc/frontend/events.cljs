@@ -99,8 +99,8 @@
 
 (reg-event-fx
  :navigate
- (fn [db [_ route]]
-   {:navigate! route}))
+ (fn [_ [_ route]]
+   {:fx [[:dispatch [:navigate! route]]]}))
 
 (reg-event-db
  :navigated

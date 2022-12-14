@@ -2,6 +2,13 @@
   (:require
    [re-frame.core :refer [reg-sub subscribe]]))
 
+;; app-db
+
+(reg-sub
+ :app-db
+ (fn [db]
+   db))
+
 ;; Routes
 
 (reg-sub
