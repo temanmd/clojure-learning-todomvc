@@ -1,7 +1,8 @@
 (ns todomvc.frontend.db
-  (:require [cljs.reader]
-            [cljs.spec.alpha :as s]
-            [re-frame.core :as re-frame]))
+  (:require
+    [cljs.reader]
+    [cljs.spec.alpha :as s]
+    [re-frame.core :as re-frame]))
 
 ;;; Spec --------------------------------------------
 
@@ -10,8 +11,8 @@
 (s/def ::done boolean?)
 (s/def ::todo (s/keys :req-un [::id ::title ::done]))
 (s/def ::todos (s/and
-                (s/map-of ::id ::todo)
-                #(instance? PersistentTreeMap %)))
+                 (s/map-of ::id ::todo)
+                 #(instance? PersistentTreeMap %)))
 (s/def ::showing
   #{:all
     :active
@@ -35,9 +36,9 @@
 ;;; Coeffects
 
 (re-frame/reg-cofx
- :local-store-todos
- (fn [cofx _]
-   (assoc cofx :local-store-todos
-          (into (sorted-map)
-                (some->> (.getItem js/localStorage ls-key)
-                         (cljs.reader/read-string))))))
+  :local-store-todos
+  (fn [cofx _]
+    (assoc cofx :local-store-todos
+      (into (sorted-map)
+        (some->> (.getItem js/localStorage ls-key)
+          (cljs.reader/read-string))))))

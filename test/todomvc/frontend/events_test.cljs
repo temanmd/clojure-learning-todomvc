@@ -1,18 +1,19 @@
 (ns todomvc.frontend.events-test
-  (:require [cljs.test :refer-macros [deftest
-                                      is
-                                      testing
-                                      use-fixtures]]
-            [reagent.dom :as rdom]
-            [re-frame.core :refer [dispatch-sync subscribe]]
-            [todomvc.frontend.effects]
-            [todomvc.frontend.events]
-            [todomvc.frontend.subs]
-            [todomvc.frontend.app :refer [init-routes]]
-            [todomvc.frontend.db :refer [todos->local-store]]))
+  (:require
+    [cljs.test :refer-macros [deftest
+                              is
+                              testing
+                              use-fixtures]]
+    [reagent.dom :as rdom]
+    [re-frame.core :refer [dispatch-sync
+                           subscribe]]
+    [todomvc.frontend.effects]
+    [todomvc.frontend.events]
+    [todomvc.frontend.subs]
+    [todomvc.frontend.app :refer [init-routes]]
+    [todomvc.frontend.db :refer [todos->local-store]]))
 
-(defn initialize-app-db
-  [f]
+(defn initialize-app-db [f]
   (todos->local-store {})
   (dispatch-sync [:initialize])
   (f))
@@ -23,7 +24,7 @@
   (testing "Initializing the app-db state"
     (let [app-db (subscribe [:app-db])]
       (is (= @app-db
-             {:todos {} :showing :all})))))
+            {:todos {} :showing :all})))))
 
 (deftest set-showing-event-test
   (testing "[:set-showing] event - Showing only done todos"
@@ -31,14 +32,14 @@
       (is (= @showing :all))
       (dispatch-sync [:set-showing :done])
       (is (= @showing :done)))))
-  
+
 (deftest add-todo-event-test
   (testing "[:add-todo] event - Adding a new todo"
     (let [todos (subscribe [:todos])]
       (is (= @todos nil))
       (dispatch-sync [:add-todo "Make a breakfast"])
       (is (= (first @todos)
-             {:id 1 :title "Make a breakfast" :done false})))))
+            {:id 1 :title "Make a breakfast" :done false})))))
 
 (deftest save-event-test
   (testing "[:save] event - Changing existed todo's title"
@@ -46,7 +47,7 @@
       (dispatch-sync [:add-todo "Make a breakfast"])
       (dispatch-sync [:save 1 "Make a diner"])
       (is (= (first @todos)
-             {:id 1 :title "Make a diner" :done false})))))
+            {:id 1 :title "Make a diner" :done false})))))
 
 (deftest delete-todo-event-test
   (testing "[:delete-todo] event - Deleting existed todo"
@@ -59,8 +60,8 @@
   (testing "[:toggle-done] event - Toggle existed todo's done flag"
     (let [todos (subscribe [:todos])
           todo-done? #(-> @todos
-                         first
-                         :done)]
+                        first
+                        :done)]
       (dispatch-sync [:add-todo "Make a breakfast"])
       (dispatch-sync [:toggle-done 1])
       (is (= (todo-done?) true))

@@ -1,9 +1,10 @@
 (ns todomvc.frontend.views
   (:require
-   [re-frame.core :refer [dispatch subscribe]]
-   [reagent.core :as reagent]
-   [clojure.string :as str]
-   ["react-dom/client" :refer [createRoot]]))
+    [re-frame.core :refer [dispatch
+                           subscribe]]
+    [reagent.core :as reagent]
+    [clojure.string :as str]
+    ["react-dom/client" :refer [createRoot]]))
 
 (defn component
   []
@@ -16,22 +17,25 @@
 (defn todo-input
   [{:keys [title on-save on-stop]}]
   (let [val (reagent/atom title)
-        stop #(do (reset! val "")
-                  (when on-stop (on-stop)))
+        stop #(do
+                (reset! val "")
+                (when on-stop (on-stop)))
         save #(let [v (-> @val str str/trim)]
                 (on-save v)
                 (stop))]
     (fn [props]
-      [:input.form-control (merge (dissoc props :on-save :on-stop :title)
-                                  {:type "text"
-                                   :value @val
-                                   :auto-focus true
-                                   :on-blur save
-                                   :on-change #(reset! val (-> % .-target .-value))
-                                   :on-key-down #(case (.-which %)
-                                                   13 (save)
-                                                   27 (stop)
-                                                   nil)})])))
+      [:input.form-control
+       (merge
+         (dissoc props :on-save :on-stop :title)
+         {:type "text"
+          :value @val
+          :auto-focus true
+          :on-blur save
+          :on-change #(reset! val (-> % .-target .-value))
+          :on-key-down #(case (.-which %)
+                          13 (save)
+                          27 (stop)
+                          nil)})])))
 
 (defn task-entry
   []
@@ -48,7 +52,7 @@
   (let [editing (reagent/atom false)]
     (fn [{:keys [id done title]}]
       [:li {:class (str (when done "completed")
-                        (when @editing "editing"))}
+                     (when @editing "editing"))}
        [:div.view
         [:input.toggle
          {:type "checkbox"
