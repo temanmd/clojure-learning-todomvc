@@ -6,7 +6,8 @@
                               use-fixtures]]
     [reagent.dom :as rdom]
     [re-frame.core :refer [dispatch-sync
-                           subscribe]]
+                           subscribe
+                           reg-event-fx]]
     [todomvc.frontend.effects]
     [todomvc.frontend.events]
     [todomvc.frontend.subs]
@@ -92,6 +93,22 @@
       (dispatch-sync [:toggle-done 3])
       (dispatch-sync [:clear-completed])
       (is (= (no-done-todos?) true)))))
+
+; (reg-event-fx
+;   :event-with-coeffect
+;   (fn [{:keys [db]} _]
+;     {:fx [[:dispatch [:add-todo "Make a lunch"]]
+;           [:dispatch [:set-showing :active]]]}
+;     {:db db}))
+
+; (deftest event-with-effect-test
+;   (testing "[:event-with-effect] example event - Do a side-effect.
+;             First add a todo, then change showing filter to :active"
+;     (let [todos (subscribe [:todos])
+;           showing (subscribe [:showing])]
+;       (dispatch-sync [:event-with-coeffect])
+;       (is (= (count @todos) 1))
+;       (is (= @showing :active)))))
 
 (comment
   (let [a {1 {:b 2} 2 {:b 3}}
