@@ -11,7 +11,6 @@
     [todomvc.frontend.effects]
     [todomvc.frontend.events]
     [todomvc.frontend.subs]
-    [todomvc.frontend.app :refer [init-routes]]
     [todomvc.frontend.db :refer [todos->local-store]]))
 
 (defn initialize-app-db [f]
